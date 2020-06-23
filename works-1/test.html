@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <style>
+        
+        .list{
+            position: relative;
+        }
+        #app .tab{
+            list-style: none;
+            float: left;
+            margin: 10px;
+            width: 100px;
+            height: 30px;
+            border: 1px solid pink;
+            text-align: center;
+            line-height: 30px;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        
+        .active{
+            width: 300px;
+            height: 300px;
+            background: pink;
+            transition: all 1s linear;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <input type="text" v-model='title'>
+        
+        <!--v-for='第一个是循环的值，第二个是固定的in，第三个是数组'-->
+        <!--v-if  跟v-show   都是用来显示隐藏的  v-if是从页面上移除，v-show是修改display：none-->
+        <!--v-model 双向绑定事件-->
+
+
+
+        <!--
+        <ul class="list">
+            <li v-for='(i,index) in user' class="tab" v-on:click='show(i,index)'>{{i.li}}
+                <div class="box" v-show='show'>{{i.div}}</div>
+            </li>
+        </ul>
+      -->
+
+
+  <!--
+        <p><ul>
+                <li v-for='(item,index) in user' >{{item.li}}
+                    <button v-on:click = 'del(item,index,$event)'>删除</button>
+        
+                </li>
+            </ul>
+        </p>
+    -->  
+       <!-- <div v-html='html'></div> -->
+
+       <!--<div v-bind:index='show'></div>    v-bind  可以转换成变量的形式-->
+
+       <!--<div v-text='html'></div>-->
+
+       <ul>
+        <li 
+        v-for="(item,index) in user" 
+        :class="{list:index == num}"
+         v-on:click="tab(index,show)">{{item.li}}</li>
+     </ul>
+     <!--@可以代表 v- -->
+     <div class="tabCon">
+        <div 
+        v-for='(itemCon,index) in user' 
+        v-show=" index == num" class="box" v-bind:class="{active:show}"
+        >{{itemCon.div}}</div>
+     </div>
+
+    </div>
+    
+    
+
+</body>
+</html>
+
+<script>
+   const vm = new Vue({
+       el:'#app',
+       data:{
+           title:'这是一个',
+           show:false,
+           html:`<h1>聊天</h1>`,
+           num: 1,
+           user:[
+               {
+                   li:'我是一个li$',
+                   div:'我是一个div1',
+                   color:'pink'
+               },
+               {
+                   li:'我是一个li$',
+                   div:'我是一个div2',
+                   color:'auqe'
+               },
+               {
+                   li:'我是一个li$',
+                   div:'我是一个div3',
+                   color:'yellow'
+               },
+               {
+                   li:'我是一个li$',
+                   div:'我是一个div4',
+                   color:'gray'
+               }
+           ],
+       },
+       methods:{
+           del(item,index,e){
+              
+            console.log(item,index);
+            console.log(e)
+            this.user.splice(index,1)
+           },
+           tab(index,show){
+             //console.log(y,index);
+             this.num = index;
+             console.log(this.num)
+            
+           }
+       }
+
+   })
+
+</script>

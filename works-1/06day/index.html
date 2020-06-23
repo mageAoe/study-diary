@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <script src="./js/switch.js"></script>
+    <style>
+        .app .Switcher{
+            width: 44px;
+            height: 22px;
+            background: rgb(179, 183, 184);
+            display: inline-block;
+            border-radius: 22px;
+            cursor: pointer;
+            transition: background-color 1s linear;
+        }
+        .btn{
+            width: 22px;
+            height: 22px;
+            background: gray;
+            border-radius: 50%;
+            transition: transform .5s linear;
+        }
+       .Switcher.btn-on{
+            background: blue;
+            
+        }
+        .Switcher.btn-on .btn{
+            transform: translate(22px)
+            
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script>
+      
+
+      new Vue({
+          el:'#app',
+          data:{
+            values:true
+          },
+          template:`
+            <div class='app'>
+              <Switcher :values='values' v-if='values'/> 
+              <Switcher :values='values'/>
+              {{values}}
+              <button @click='values=!values'>切换</button>
+            </div>
+          `,
+          beforeCreate(){
+            
+            //这是实例将要被创建的状态，类似于  var a；但是没有赋值，是存在的
+            //这个beforeCreate 可以用来做ajax请求，提前去后台拿到数据
+             console.log('vue实例将要被创建了')
+             console.log(this.values) //undfined
+          },
+          created(){
+              //这是已经被创建好的状态
+              //crete 里面是可以访问到当前实例的任何成员
+              //可以初始化一些数据（检测数据或者初始化数据）
+              console.log('vue实例已经创建好了')
+              console.log(this.values) //true
+          },
+          beforeMount(){
+              //开始挂在元素
+              //挂在dom上之前
+              console.log('将已经生成好的 html元素添加的dom中')
+              console.log(this.$el) //是一个id为app的元素，拉不到组建中的内容
+              //如果想获取挂在之前的一些东西，就在beforemount里，或者是保留一些数据
+          },
+          mounted(){
+            //
+            console.log('组建中的实例已经挂在到 dom中去了')  
+            console.log(this.$el) //这里拿到的是class为app的元素，也就是组建中创建的实例
+            //在这个过程之后我们再去获取组建的dom元素是最保守的
+          },
+          beforeUpdate(){
+           
+            console.log('')
+            //只有在你改变那个数据 和模板有关系，才回发生变化 才回触发这个两个钩子
+            //模板更新之前
+          },
+          updated(){
+            //模板更新之后他们两个死同步变化的，可以用来获取更新之前和更新之后dom的东西
+              console.log('updated')
+          },
+         
+
+
+
+      })
+    </script>
+</body>
+</html>

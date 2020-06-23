@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <title>Document</title>
+    <style>
+       .demo{padding: 10px;display: flex;align-items: center;}
+       .demo .left,.right{width: 200px;height: 300px;border: 1px solid #ccc;}
+       .btn button{width: 100%;margin-top:50px; }
+    </style>
+</head>
+<body>
+    <div id="app">
+            
+    </div>
+
+    
+
+    <script>
+
+         Vue.component('Test',{
+             props:{
+                 data:null
+             },
+             template:`
+             <div class="demo">
+                    <div class="left" >
+                        <div v-for='item in this.data.arr1'>
+                             <input v-model='item.value' type="checkbox" >{{item.data}}
+                        </div>
+                    </div>
+                    <div class="btn">
+                        <button @click='btnleft' :disabled="cptArr1.length ===0">>></button>
+                        <button @click='btnright' :disabled="cptArr2.length ===0"><<</button>
+                    </div>
+                    <div class="right">
+                         <div v-for='item in this.data.arr2'>
+                             <input v-model='item.value' type="checkbox" >{{item.data}}
+                        </div>
+                    </div>
+             </div>
+             `,
+             computed:{
+               cptArr1(){
+                 return this.data.arr1.filter(k=>{
+                       return k.value
+                   })  
+               },
+               cptArr2(){
+                   return  this.data.arr2.filter(k=>{
+                       return k.value
+                   })
+
+               }
+           },
+           methods:{
+            btnright(){
+                //console.log(this.cptArr2)
+                //上面函数返回的值，被拷贝了
+                const origin = JSON.parse(JSON.stringify(this.cptArr2))
+                this.data.arr2 = this.data.arr2.filter(k=>{
+                    return k.value === false
+                })
+                
+                //将被深拷贝的值push到另一个数组中
+                origin.forEach(e => {
+                     e.value = false
+                     this.data.arr1.unshift(e)
+                });
+            },
+            btnleft(){
+                //这是个深拷贝的方法
+                const origin = JSON.parse(JSON.stringify(this.cptArr1))
+                //判断，多虑掉值为false的值
+                this.data.arr1 = this.data.arr1.filter(k=>{
+                    return k.value === false
+                })
+
+                origin.forEach(e => {
+                     e.value = false
+                     this.data.arr2.unshift(e)
+                });
+            }
+           }
+
+         })
+
+       new Vue({
+           el:'#app',
+           data:{
+             data:{
+                 arr1:[
+                     {
+                         value:false,
+                         data:1
+                     },
+                     {
+                         value:false,
+                         data:2
+                     },
+                     {
+                         value:false,
+                         data:3
+                     },
+                     {
+                         value:false,
+                         data:4
+                     },{
+                         value:false,
+                         data:5
+                     }
+                     ],
+                arr2:[
+                     {
+                         value:false,
+                         data:6666
+                     },
+                     {
+                         value:false,
+                         data:7777
+                     },
+                     {
+                         value:false,
+                         data:8888
+                     },
+                     {
+                         value:false,
+                         data:9999
+                     },{
+                         value:false,
+                         data:10
+                     }
+
+                     ]
+             }
+           },
+           template:`
+             <div class='app'>
+                <Test :data='data'/>
+             </div>
+           `,
+           
+       })
+       
+       
+    </script>
+</body>
+</html>

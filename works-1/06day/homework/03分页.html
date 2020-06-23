@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+      .app ul li{
+          list-style: none;
+          display: inline-block;
+          width: 32px;
+          height: 32px;
+          border: 1px solid #dcdee2;
+          border-radius: 4px;
+          line-height: 32px;
+          text-align: center;
+          margin: 0 5px;
+          user-select: none;
+      }
+      .app ul li.active{
+          border: 1px solid pink
+      }
+    </style>
+</head>
+<body>
+    
+    <div id="app"></div>
+</body>
+</html>
+
+<script>
+     
+     Vue.component('page',{
+         props:{
+             total:Number
+         },
+         template:`
+         <div class='app'>
+            
+            <ul>
+            <li @click='prve'><</li>
+            <li v-for='item in concat'
+            @click = 'click(item)'
+            :class ='{active:selectindex == item}'
+            >{{item +1}}</li>
+            <li @click='next'>></li>  
+            </ul>
+        </div>
+
+         `,
+         data(){
+            return {
+                selectindex: 0
+            }
+         },
+         methods:{
+              
+            click(item){
+                 
+                //这一步是必须的
+                if(item ===null){
+                    return '...'
+                }else{
+                    this.selectindex = item;
+                }
+            },
+            prve(){
+                this.selectindex--
+                if(this.selectindex <0){
+                    
+                    this.selectindex =0;
+                }
+            },
+            next(){
+                this.selectindex++
+                if( this.selectindex == this.btns.length -1){
+                      
+                    this.selectindex = this.btns.length -1
+                }
+            }
+         },
+         computed:{
+             btns(){
+                 let arr =[]
+                for(var i=0;i<this.total/10;i++){
+                    arr.push(i)
+                }
+                return arr;
+             },
+             //前面的数据
+             beforefilter(){
+                   if(this.selectindex < this.btns.length /2 ){
+                        return this.btns.filter((k,index)=>{
+                        
+                        return index<= this.selectindex+2
+                        })
+                   }else{
+                       return [this.btns[0]]
+                   }
+                
+             },
+             //后面的数据
+             afterfilter(){
+                 if(this.selectindex < this.btns.length / 2){
+                       
+                    return [this.btns[this.btns.length -1]]
+                 }else{
+                     return this.btns.filter((k,index)=>{
+                         return index > this.selectindex -2
+                     })
+                 }
+
+             },
+             concat(){
+                 //[...this.beforefilter,...this.afterfilter]
+                 return [].concat(this.beforefilter,this.afterfilter)
+             }
+
+         }
+
+     })
+
+   new Vue({
+       el:'#app',
+       data:{
+           total:100
+       },
+       template:`
+        
+       <page :total='total'/>
+       `
+   })
+
+</script>

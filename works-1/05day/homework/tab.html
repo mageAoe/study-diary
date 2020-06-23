@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../js/tab.js"></script>
+</head>
+<body>
+    
+  <div id="app"></div>
+
+
+  <script>
+     new Vue({
+         el:'#app',
+         data:{
+            column:[
+                'id',
+                'name',
+                'age',
+                'sex'
+            ],
+            data:[
+                {
+                id:1,
+                name:'张三',
+                age:18,
+                sex:'male'
+                },
+                {
+                id:2,
+                name:'张三',
+                age:18,
+                sex:'male'
+                },
+                {
+                id:3,
+                name:'张三',
+                age:18,
+                sex:'male'
+                },
+            ]
+            
+         },
+         template:`
+          <div class = 'app'>
+                <Table :column = 'column' :data = 'data' hover bordered/>
+                <Table :column = 'column' :data = 'data' hover bordered/> 
+                <Table :column = 'column' :data = 'data' hover bordered/>   
+          </div>
+         `
+     })
+  
+  </script>
+</body>
+</html>

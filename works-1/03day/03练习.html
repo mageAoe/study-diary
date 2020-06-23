@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+      .chat{
+          width: 300px;
+          height: 500px;
+          border: 1px solid black;
+          position: relative;
+      }
+      .chat div li{
+          list-style: none;
+          
+      }
+      
+      .chat textarea{
+          position: absolute;
+          bottom: 0px;
+          width: 100%;
+          height: 50px;
+          box-sizing: border-box;
+          resize: none;
+          outline: none
+      }
+      .chat button{
+          position: absolute;
+          bottom: 10px;
+          right: 15px
+      }
+      .chat .main{
+          text-align:right;
+          background: red;
+          margin: 5px 0;
+      }
+     .chat .content{
+         width: 100%;
+         height: 400px;
+          overflow: auto;
+      }
+    </style>
+</head>
+<body>
+    
+
+    <div id="app">
+        <!--使用if  else if判断-->
+        <!--<input type="number" v-model = 'num'>
+        <h1 v-if="num ==1">内容1</h1>
+        <h1 v-else-if="num ==2">内容2</h1>
+        <h1 v-else>内容3</h1>
+        -->
+
+       <div class="chat">
+           <div class="content">
+               <ul>
+                   <li 
+                   v-for="(item,index) in chatlist"
+                   :class='item.target'
+                   >
+                      {{item.username}}
+                       <span>
+                           {{item.content}}
+                       </span>
+                   </li>
+               </ul>
+           </div>
+
+           <textarea v-model='input' @keydown.enter.prevent='send'>
+
+           </textarea>
+           <button @click='send'>发送</button>
+       </div>
+
+      
+
+    </div>
+
+
+    <script>
+        
+        new Vue({
+            el:'#app',
+            data:{
+                 num:1,
+                 input:'',
+                 chatlist:[
+                     {
+                         username:'W',
+                         target:'other',
+                         content:'你你好'
+                     },
+                     {
+                        username:'S',
+                        target:'main',
+                        content:'你好'
+                     }
+                 ]
+
+            },
+            methods:{
+                send(){
+                   event.preventDefault();
+                    if(this.input == ''){
+                        return false
+                    }else{
+                        this.chatlist.push({
+                        username:'S',
+                        target:'main',
+                        content:this.input
+                    })
+                    this.input = ''
+
+                    setTimeout(()=>{
+                        this.chatlist.push({
+                        username:'W',
+                        target:'other',
+                        content:'对方不想跟你聊并向你扔了一个大便'
+                    })
+                    },2000)
+                    }
+                    
+                }
+            }
+        })
+
+        
+    </script>
+</body>
+</html>

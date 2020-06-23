@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <title>Document</title>
+     <style>
+      .app{width: 44px;height: 22px;background: #ccc;border-radius: 11px;margin: 50px;padding: 1px;position: relative;}
+      #app .large{width: 72px;height: 32px;border-radius: 16px;}
+      #app .large .btn{width: 32px;height: 32px;border-radius: 16px;}
+      #app .large.on .btn{transform: translateX(40px)}
+
+      .app .btn{width: 22px;height: 22px;border-radius: 11px;background: lightseagreen; transition:transform .5s linear }
+      .app.on{background: pink}
+      .app.on .btn{transform: translateX(22px)}
+     
+      #app .small{width: 30px;height: 15px;border-radius: 10px;}
+      #app .small .btn{width: 15px;height: 15px;border-radius: 7.5px;}
+      #app .small.on .btn{transform: translateX(15px)}
+     </style>
+
+</head>
+<body>
+    
+    <div id="app">
+       
+    </div>
+
+    <script>
+    
+    Vue.component('ButtonOnOff',{
+        props:{
+            value:Boolean,
+            size:String, //还有个方法就是定义多个变量为boolean值，然后父组件就可以直接填值
+            color:String //
+        },
+        watch:{
+            value(val){
+               //console.log(val)
+               this.ivalue =val
+            },
+            ivalue(val){
+               this.$emit('run',val) //触发父级身上的事件，去改变他的值
+            }
+        },
+        data(){
+            return {
+               ivalue:this.value 
+            }
+        },
+   
+        template:`
+            
+            <div class="app " 
+            :style="{backgroundColor:ivalue ? color:''}"
+            :class="{
+                on:ivalue,
+                large: size === 'large',
+                small: size === 'small'
+                
+            }"
+            @click='ivalue=!ivalue'
+            >
+                <div class="btn" ></div>
+            </div>
+        `
+    })
+      const vm =  new Vue({
+           el:'#app',
+           data:{
+              def:false
+           },
+           template:`
+           <div id='app'>
+            {{def}}
+               //在这个value绑定的变量里面，传出去的是变量，但是被porps接收的却是value
+              <ButtonOnOff :value='def'  size ='small'/>
+              <ButtonOnOff :value='def'  size ='large'/>
+              <ButtonOnOff @run = 'run' :value='def'  size ='' color = 'blue'/>
+           </div>
+           `,
+        methods:{
+            run(val){
+                this.def = val
+            }
+        }
+
+       })
+       
+    </script>
+
+</body>
+</html>

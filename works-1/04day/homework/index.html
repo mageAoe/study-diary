@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+            <div>
+                    <!--@input是个方法-->
+                    <input type="text" v-model='search'  @keydown.37.38.39.40.13 = 'choic'>
+                    <ul>
+                        <li v-for='(item,index) in datalist'
+                        :class = '{active:index === select}'
+                        >
+                        {{item}}
+                        </li>
+                    </ul>
+                </div>
+    </div>
+     
+
+
+    <script>
+        // var oscript = document.createElement('script')
+		// oscript.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+this.value+"&json=1&p=3&sid=1446_21121_26350_20930&req=2&csor=1&cb=fn"
+        
+        //数组方法：
+        /*
+          遍历，没有返回值
+          data.forEach((value,index,arr)=>{})
+          遍历，有返回值
+          var a  = data.map((value,index,arr)=>{})
+          遍历  加过滤  有返回值
+          var b = data.filter((value,index,arr)=>{})
+        */
+
+       new Vue({
+           el:'#app',
+           data:{
+            search:'',
+            select:'',
+            user:[
+                '张三',
+                '张二',
+                '王八',
+                '小虎',
+                '小明',
+                '小芳'
+            ]
+            
+           },
+           methods:{ 
+
+            //   fn(){
+            //       var a = []
+            //       a = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+search+"&json=1&p=3&sid=1446_21121_26350_20930&req=2&csor=1&cb="+fn+"'
+            //      return a
+            //   }
+         
+           },
+           computed:{
+             datalist(){
+                 if(!this.search) return [];    
+                     return this.user.filter((value)=>{
+                          return value.indexOf(this.search) !== -1
+                          //indexOf  如果要检索的字符串值没有出现，则该方法返回 -1 
+                     })
+                 }
+           }
+       })
+    </script>
+</body>
+</html>

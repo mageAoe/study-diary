@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+      .tab{
+          width: 500px;
+          height: 300px;
+          border: 1px solid black;
+          position: relative
+      }
+      .tab header{
+          height: 30px;
+          border-right: 1px solid black;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          padding: 0 20px
+      }
+      .tab main{
+          width: 100%;
+          height: 260px;
+          border: 1px solid black;
+          box-sizing: border-box;
+          outline: none;
+          position: absolute;
+          bottom: 0;
+      }
+      .active{
+          background: gray;
+      }
+    </style>
+</head>
+<body>
+    
+
+    <div id="app">
+        <div class="tab">
+           
+            <header v-for="(item,index) in user"
+            :class = '{active: index === num}'
+            @click="num = index"
+            >
+               {{item.name}}
+            </header>
+            <main v-for="(item,index) in user"
+             v-if="index ===num"
+             :style = '{backgroundColor:item.color}'
+            >
+               {{item.content}}
+               {{item.color}}
+            </main>
+        </div>
+
+
+    </div>
+</body>
+</html>
+
+<script>
+   
+   new Vue({
+       el:'#app',
+       data:{
+         num:0,
+         user:[
+             {
+                 name:'我的关注',
+                 content:'box1',
+                 color:'red'
+             },
+             {
+                 name:'小说',
+                 content:'box2',
+                 color:'pink'
+             },
+             {
+                 name:'推荐',
+                 content:'box3',
+                 color:'blue'
+             },
+             {
+                 name:'导航',
+                 content:'box4',
+                 color:'yellow'
+             }
+         ]
+
+       },
+       
+   })
+
+</script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组建的基础</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="../../js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    
+        
+    <div id="app">
+           
+    </div>
+         
+
+    <script>
+        //组建  有methods 、 computed 
+        //组建命名成驼峰状态 ，可以更好的使用，而且驼峰语法在html会被自动转化成小写  
+        Vue.component('DropdownMenu',{
+            //在组建中扩展的一个选项
+           props:['value','data'],
+           template:  //组建所需要的模板
+           `
+           <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      {{value}}
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a href="#"
+                        v-for="item in data"
+                        >{{item}}</a></li>
+                    </ul>
+                 </div>
+           `,
+           data(){  //可以传这个属性，当必须是个对象，data的作用域是当前的这个
+               return {
+ 
+               }
+           }
+
+        })
+       new Vue({
+           el:'#app',
+           data:{
+               user:[
+                   'name',
+                   'age',
+                   'sex'
+               ]
+           },
+           template: //给实例指定模板选项 ,  吧一个数组传到组建的props中，在组建里进行遍历
+           `
+           <div class="app">
+                <dropdown-menu value = '第一个组建' :data='user'/>
+                <dropdownMenu  value = '第二个组建' :data='user'/>
+            </div>
+           
+           `,
+
+
+       })
+ 
+    </script>
+</body>
+</html>

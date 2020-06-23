@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作业 图标的组建</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../js/icon.js"></script>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+    
+       new Vue({
+           el:'#app',
+           template:`
+               
+            <div>
+                    <icon  type = 'fire' size = '20' color = 'red'/> 
+                    <icon  type = 'leaf' siez = '16' color = 'pink'/>
+                    <icon  type = 'camera' size = '80' color='yellow'/> 
+                    <icon type = 'heart'/>   
+            </div>
+           `
+       })
+    </script>
+</body>
+</html>

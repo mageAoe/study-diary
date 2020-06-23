@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="./css/animate.css" rel="stylesheet">
+    <script src="../js/vue.js"></script>
+    
+    <style>
+      .box{
+          width: 100px;
+          height: 100px;
+          background: pink
+      }
+      /*进入动画之前 入场的初始化效果*/
+      .fade-enter{
+          opacity: 0;
+      }
+       /*进入的动画效果*/
+      .fade-enter-active{
+          transition: opacity 10s linear
+      }
+
+      /*进入到什么效果*/
+      .fade-enter-to{
+         opacity: 1
+      }
+                         /*这两个可以完全被省略*/
+      /*离开的开始效果*/
+      .fade-leave{
+         opacity: 1
+      }
+
+      /*定义离开的过度效果*/
+      .fade-leave-active{
+         transition: opacity 10s linear 
+      }
+      /*离开到什么状态*/
+     .fade-leave-to{
+       opacity: 0
+     }
+       /*这个动画需要在transition实例中添加  enter-active-class='fadeIn'进入的动画 
+       还有 leave-active-clss='fadeOut'的动画*/
+     @keyframes fadeIn{}
+     @keyframes fadeOut{}
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+
+    </div>
+
+
+    <script>
+      new Vue({
+          el:'#app',
+          data:{
+            value:true
+          },
+          template:`
+            <div class='app'>
+            <transition
+            enter-active-class="animated lightSpeedln"
+            leave-active-class="animated lightSpeedOut"
+
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            @enter-cancelled="enterCancelled"
+
+            @before-leave="beforeLeave"
+            @leave="leave"
+            @after-leave="afterLeave"
+            @leave-cancelled="leaveCancelled"
+            >
+            <div class='box' v-if='value'>
+                
+            </div>      
+            </transition>    
+            
+            <button @click = 'value=!value'>开关</button>
+            </div>
+
+            
+           
+          `,methods: {
+                beforeEnter(){
+                    // 进入之前
+                    console.log('动画进入之前')
+                },
+                enter(){
+                    console.log('动画进入时')
+                },
+                afterEnter(){
+                    console.log('动画进入后')
+                },
+                enterCancelled(){
+                    // 在动画还未完成时 取消动画该钩子就会运行
+                    console.log('进入动画取消')
+                },
+                beforeLeave() {
+                    console.log('动画离开前')
+                },
+                leave() {
+                    console.log('动画离开时')
+                },
+                afterLeave() {
+                    console.log('离开后')
+                },
+                leaveCancelled(){
+                    console.log('离开动画取消')
+                },
+
+            },
+
+      })
+    
+    </script>
+</body>
+</html>

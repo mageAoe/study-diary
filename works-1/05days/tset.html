@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+       #app{width: 320px;height: 600px;background: #ccc;margin: 50px auto;}
+       .top{width: 320px;height: 32px;background: red;}
+       .title{width: 320px;height: 30px;font-weight:900;color: white;background: black;text-align: center;line-height: 30px;}
+       .singer{width: 320px;height: 30px;color: white;background: black;text-align: center;line-height: 30px;}
+       .play{width: 190px;height: 190px;margin: 20px auto;background: #ff88bb}
+       .geci{width: 298px;height: 257px;border:1px solid lightgreen;margin: 0 auto;padding: 8px;overflow: hidden;}
+       .content{position: relative;width: 100%;height:100%;text-align: center;font-size: 14px;color: white;}
+    </style>
+</head>
+<body>
+    <div id="app">
+         <div class="top"></div>
+         <div class="title">我的音乐</div>
+         <div class="singer">皇后大道</div>
+         <div class="play"></div>
+         <div class="geci">
+            <div class="content"></div>
+         </div>
+    </div>
+    <audio class="mymusic" src="audio/蒋志光,罗大佑 - 皇后大道东.mp3"></audio>
+
+</body>
+</html>
+
+<script>
+
+  var text = '[00:20.990]皇后大道西又皇后大道东[00:23.990]皇后大道东转皇后大道中[00:28.990]皇后大道东上为何无皇宫[00:32.990]皇后大道中人民如潮涌[00:36.990]有个贵族朋友在硬币背后 青春不变名字叫做皇后[00:44.990]每次买卖随我到处去奔走 面上没有表情却汇聚成就[00:52.990]知己一声拜拜远去这都市 要靠伟大同志搞搞新意思[01:00.990]照买照卖楼花处处有单位 但是旺角可能要换换名字[01:09.990]皇后大道西又皇后大道东[01:13.990]皇后大道东转皇后大道中[01:17.990]皇后大道东上为何无皇宫[01:21.990]皇后大道中人民如潮涌[01:25.990]这个正义朋友面善又友善 因此批准马匹一周跑两天[01:33.990]百姓也自然要斗快过终点 若做大国公民只须身有钱[01:41.990]知己一声拜拜远去这都市 要靠伟大同志搞搞新意思[01:49.990]冷暖气候同样影响这都市 但是换季可能靠特异人士[01:57.990]空即是色 色即是空 空即是色即是色即是空[02:13.990]皇后大道西又皇后大道东[02:17.990]皇后大道东转皇后大道中[02:21.990]皇后大道东上为何无皇宫[02:25.990]皇后大道中人民如潮涌[02:30.990]这个漂亮朋友道别亦漂亮 夜夜电视萤幕继续旧形象[02:37.990]到了那日同庆个个要鼓掌 硬币上那尊容变烈士铜像[02:46.990]知己一声拜拜远去这都市 要靠伟大同志搞搞新意思[02:54.990]会有铁路城巴也会有的士 但是路线可能要问问何事[03:03.990]皇后大道西又皇后大道东[03:07.990]皇后大道东转皇后大道中[03:11.990]皇后大道东上为何无皇宫[03:15.990]皇后大道中人民如潮涌[03:19.990]皇后大道西又皇后大道东[03:23.990]皇后大道东转皇后大道中[03:27.990]皇后大道东上为何无皇宫[03:31.990]皇后大道中人民如潮涌'  
+  var aplay = document.getElementsByClassName('play')[0];
+  var mymusic = document.getElementsByClassName('mymusic')[0];
+  var onoff = true;
+  aplay.onclick = function(){
+      //这个play方法是audio标签自带的
+      if(onoff){
+        mymusic.play()
+        onoff = false;
+      }else{
+          //这个方法也是自带的
+          mymusic.pause()
+          onoff = true;
+      }
+  }
+
+
+ var content = document.getElementsByClassName('content')[0]; 
+ var htmltext = '' //循环储存歌词
+ var arr = text.split('[')
+ for(var i = 0;i<arr.length;i++){
+     //console.log(arr[i])
+     var arr2 = arr[i].split(']')
+     var times = arr2[0].split('.')
+     var time = times[0].split(':')
+     if(time.length > 1){
+
+        var clr = Number(time[0] * 60) + Number(time[1])
+     }
+     
+     if(arr2[1]){ //开头空歌词，有个undefined
+        htmltext  += "<p id = "+clr+">" +arr2[1]+ "</p>"
+        
+     }  
+
+ }  
+
+ //将歌词放到div中
+ content.innerHTML = htmltext;
+
+  console.log(content)
+  var geciT = content.getElementsByTagName('p')
+  //console.log(geciT)
+  var n = 0;
+  //audio原生方法timeupdate,currentTime
+  mymusic.addEventListener('timeupdate',function(){
+     //能打印出音乐播放的进度，实现歌词同步       
+    var tongbu = parseInt(this.currentTime)
+    if(document.getElementById(tongbu)){
+        
+        for(var i = 0;i<geciT.length;i++){
+            geciT[i].style.color = ''
+            geciT[i].style.fontSize = '14px'
+        }
+        document.getElementById(tongbu).style.color = 'green'
+        document.getElementById(tongbu).style.fontSize = '18px';
+        if(geciT[n+5].id == tongbu){
+
+            content.style.top = -n * 25 + 'px'
+            n++
+        }
+    }
+
+  })
+
+  var ttt = 10;
+  //修改了dev分支
+</script>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../js/boot.js"></script>
+</head>
+<body>
+
+    <div id="app"></div>
+    
+
+    <script>
+      new Vue({
+          el:'#app',
+          data:{
+
+          },
+          template:`
+         <div class='app'>
+             <Button  color = 'primary' size = 'lg'> 按钮1</Button>
+             <Button  color = 'success' size = 'xs'> 按钮2</Button>
+             <Button  color = 'info' size = 'lg'> 按钮2</Button>
+             <Button  color = 'warning' > 按钮2</Button>
+             <Button  color = 'danger' size = 'sm'> 按钮2</Button>
+
+         </div>
+
+          `
+      })
+
+    </script>
+</body>
+</html>

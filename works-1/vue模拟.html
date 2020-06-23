@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <style>
+        
+        #app .active{
+            width: 300px;
+            height: 300px;
+            background: pink;
+            transition: all 1s linear;
+        }
+         .box{
+            width: 100px;
+            height: 100px;
+            background: transparent;
+                       
+        }
+        .box2{
+            width: 1000px;
+            height: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <input type="text" id="text" value="sdg">
+
+    <div id="app">
+        <!-- <div v-on:click="isActive = !isActive" v-bind:class="['box',{active: isActive}]">呵呵</div> -->
+
+        <div  v-on:click='show = !show' class="box" v-bind:class='{active:show}' >aaaaaa</div>
+        <!--<div v-bind:class='{classname:true}'>可以使用Boolean<。 true就显示，F反之/div>-->
+        <!--<div class="box" v-bind:style="{backgroundColor:colors}">
+          aaa
+        </div>
+        {{colors}}
+        <input type="color" v-model='colors'>-->
+        
+        <div class="box2"  :style="{backgroundColor:'rgba(0,0,0,'+(range/100)+')'}">
+
+        </div>
+        <input type="range" v-model='range'>
+
+    </div>
+
+    <script>
+        var titl = 'haha';
+        var app = document.getElementById('text')
+                app.onblur = function(){
+                console.log(app.value)
+                 var x = app.value; 
+            }
+        let obj = {
+            set title(p){ //set拦截器
+                var app = document.getElementById('text')
+                var p = app.onblur = function(){
+                  return  app.value; 
+                }
+                
+                document.getElementById('box').innerText = p;
+                //这个参数就是设置的时候读到的值
+                title = p;
+            },
+            get title(){
+                return title;
+            }
+            
+        }
+     
+
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                classname:'active',
+                show:false,
+                colors:'',
+                range:''
+            }
+        })
+        
+    </script>
+</body>
+</html>

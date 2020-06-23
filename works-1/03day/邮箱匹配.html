@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+
+    <style>
+       .active{
+           background: gray;
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!--@input是个方法-->
+            <input type="text" v-model='email' @input='send' @keydown.37.38.39.40.13 = 'choic'>
+            <ul>
+                <li v-for='(item,index) in emaillist' @click = 'chang(item)'
+                :class = '{active:index === select}'
+                >
+                   {{item}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    
+
+
+    <script>
+    
+        new Vue({
+            el:'#app',
+            data:{
+                email:'',
+                select:-1,
+                emaillist:[
+                
+                ]
+                    
+
+            },
+            methods:{
+                send(){
+                    if(/[\@]{1,}/g.test(this.email)){
+                        return
+                    }
+                    //console.log(this.email)
+                    this.emaillist = [
+                           this.email + '@qq.com',
+                           this.email +'@0355.net',
+                           this.email +'@163.com',
+                           this.email +'@163.net',           
+                           this.email +'@263.net',                             
+                           this.email +'@3721.net',  
+                           this.email +'@yeah.net',
+                           this.email +'@googlemail.com',
+                           this.email +'@mail.com',
+                           this.email +'@gmail.com',
+                           this.email +'@yahoo.com',
+                           this.email +'@msn.com',
+                           this.email + '@hotmail.com',
+                           this.email +'@aol.com',
+                           this.email +'@ask.com',
+                           this.email +'@live.com'
+                    ]
+                },
+                choic(e){
+                    e = e || event
+                    const keycode = event.keyCode;
+                    switch(keycode){
+                       case 13:
+                         this.chang(this.emaillist[this.select])
+                       break;
+
+                        case 37:
+                           
+                        break;
+                        case 38:
+                         event.preventDefault();
+                          this.select--;
+                          if(this.select <0){
+                              this.select = this.emaillist.length-1;
+                          }
+
+                        break;
+                        case 39:
+
+                        break;
+                        case 40:
+                         event.preventDefault();
+                          this.select++;
+                          if(this.select>this.emaillist.length -1){
+                              this.select = 0;
+                          }
+                        break;
+
+
+                    }
+                        
+                },
+                chang(item){
+                   this.email = item;
+                   this.emaillist = []
+                }
+            },
+            computed:{  //计算 自动计算
+                 emaillist(){
+                     //只要在computed选项 里面的函数  只要使用了实例里的成员
+                     //实例成员只要发生改变 computed 里的函数就会重新计算结果
+                 }
+                 
+            }
+        })
+
+    </script>
+</body>
+</html>

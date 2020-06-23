@@ -1,0 +1,20 @@
+//导入test.less
+@import 'test';
+
+
+@bg:red;
+@color:pink;
+@font:24px;
+@width:200;
+@height:200px;
+
+div{background: @bg;
+.con(@color, @font, @width, @height)
+}
+.con(@c,@f,@w,@h){
+    color: @c;
+    font-size: @f;
+    width: @w;
+    height:@h;
+}
+
